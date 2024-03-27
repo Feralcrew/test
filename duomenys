@@ -1,0 +1,170 @@
+import java.util.*;
+
+// Main class to run the program
+public class Main {
+    public static void main(String[] args) {
+        // Initializing controllers
+        AdminController adminController = new AdminController();
+        ReaderController readerController = new ReaderController();
+
+        // Simulating user interaction (authentication and usage)
+        User admin = new User("admin", "admin123", Role.ADMIN);
+        User reader = new User("reader", "reader123", Role.READER);
+
+        AuthenticationService authService = new AuthenticationService();
+
+        if (authService.authenticate(admin)) {
+            adminController.addBookCategory("Fantasy");
+            adminController.addBook(new Book("The Hobbit", "Fantasy", "123456789", "Fantasy novel", 300));
+            adminController.addBook(new Book("Harry Potter", "Fantasy", "987654321", "Fantasy novel", 400));
+            adminController.addBook(new Book("The Lord of the Rings", "Fantasy", "111222333", "Fantasy novel", 1000));
+            adminController.removeBook("The Lord of the Rings");
+        }
+
+        if (authService.authenticate(reader)) {
+            readerController.searchBook("Harry Potter");
+            readerController.reserveBook(reader, "Harry Potter");
+            readerController.addToFavorites(reader, "Harry Potter");
+        }
+    }
+}
+
+// Enum to represent user roles
+enum Role {
+    ADMIN,
+    READER
+}
+
+// Class representing a user
+class User {
+    private String username;
+    private String password;
+    private Role role;
+
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    // Getters and setters
+    // ...
+}
+
+// Class representing a book
+class Book {
+    private String title;
+    private String category;
+    private String isbn;
+    private String summary;
+    private int pageCount;
+
+    public Book(String title, String category, String isbn, String summary, int pageCount) {
+        this.title = title;
+        this.category = category;
+        this.isbn = isbn;
+        this.summary = summary;
+        this.pageCount = pageCount;
+    }
+
+    // Getters and setters
+    // ...
+}
+
+// Class representing a category of books
+class Category {
+    private String name;
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    // Getters and setters
+    // ...
+}
+
+// Class representing a reservation
+class Reservation {
+    private User user;
+    private Book book;
+
+    public Reservation(User user, Book book) {
+        this.user = user;
+        this.book = book;
+    }
+
+    // Getters and setters
+    // ...
+}
+
+// Class responsible for user authentication
+class AuthenticationService {
+    public boolean authenticate(User user) {
+        // Simulating authentication logic
+        return user != null && user.getUsername().equals("admin") && user.getPassword().equals("admin123");
+    }
+}
+
+// Controller responsible for administrative actions
+class AdminController {
+    private static List<Book> books = new ArrayList<>();
+    private static List<Category> categories = new ArrayList<>();
+
+    public void addBookCategory(String name) {
+        Category category = new Category(name);
+        categories.add(category);
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void removeBook(String title) {
+        for (Iterator<Book> iterator = books.iterator(); iterator.hasNext(); ) {
+            Book book = iterator.next();
+            if (book.getTitle().equals(title)) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
+}
+
+// Controller responsible for reader actions
+class ReaderController {
+    private static List<Reservation> reservations = new ArrayList<>();
+    private static List<Book> favorites = new ArrayList<>();
+
+    public void searchBook(String title) {
+        for (Book book : AdminController.books) {
+            if (book.getTitle().equals(title)) {
+                System.out.println("Book found: " + book.getTitle());
+                return;
+            }
+        }
+        System.out.println("Book not found.");
+    }
+
+    public void reserveBook(User user, String title) {
+        for (Book book : AdminController.books) {
+            if (book.getTitle().equals(title)) {
+                Reservation reservation = new Reservation(user, book);
+                reservations.add(reservation);
+                System.out.println("Book reserved: " + book.getTitle());
+                return;
+            }
+        }
+        System.out.println("Book not available for reservation.");
+    }
+
+    public void addToFavorites(User user, String title) {
+        for (Book book : AdminController.books) {
+            if (book.getTitle().equals(title)) {
+                favorites.add(book);
+                System.out.println("Book added to favorites: " + book.getTitle());
+                return;
+            }
+        }
+        System.out.println("Book not found.");
+    }
+}
