@@ -1,0 +1,49 @@
+// Paprasčiausias būdas susieti šią programą su XAMPP duomenų baze yra naudojant JDBC (Java Database Connectivity). JDBC yra Java platformos dalis, skirta ryšiui su duomenų baze užmegzti ir valdyti. Štai kaip galite tai padaryti:
+
+//Paruoškite duomenų bazę XAMPP:
+//Įsitikinkite, kad XAMPP įdiegtas ir paleistas, ir kad jūsų MySQL arba MariaDB duomenų bazės serveris veikia.
+
+//Sukurkite reikiamą duomenų bazę ir lentelę:
+//Sukurkite duomenų bazę ir lentelę, kurioje bus saugomi duomenys apie knygas ir rezervacijas. Galite tai padaryti naudodami phpMyAdmin arba bet kurį kitą duomenų bazės valdymo įrankį.
+
+//Prijunkite programą prie duomenų bazės naudodami JDBC:
+//Įtraukite JDBC tvarkyklę į savo projektą. JDBC tvarkykles galite parsisiųsti iš mūsųtvarkyklės pagrindinio puslapio ir pridėti ją į savo projektą.
+
+//Prijunkite programą prie duomenų bazės sujungimo eilute:
+//Nurodykite savo XAMPP duomenų bazės prisijungimo informaciją (pvz., URL, vartotojo vardą, slaptažodį) ir naudodamiesi JDBC sukurkite prisijungimą prie duomenų bazės.
+
+//Panaudokite JDBC užklausas:
+//Naudodami JDBC, įvykdykite užklausas į duomenų bazę, kad galėtumėte ištraukti, įtraukti, redaguoti arba trinti duomenis pagal savo programos poreikius.
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseConnector {
+    private static final String URL = "jdbc:mysql://localhost:3306/your_database_name";
+    private static final String USERNAME = "your_username";
+    private static final String PASSWORD = "your_password";
+    private static Connection connection = null;
+
+    public static Connection connect() {
+        try {
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("Connected to the database.");
+        } catch (SQLException e) {
+            System.out.println("Connection to the database failed.");
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
+    public static void disconnect() {
+        if (connection != null) {
+            try {
+                connection.close();
+                System.out.println("Disconnected from the database.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
