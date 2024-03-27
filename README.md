@@ -1,0 +1,1 @@
+Čia talpinama egzamino užduotis.
