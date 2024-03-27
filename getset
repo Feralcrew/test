@@ -1,0 +1,115 @@
+// User, Book ir Category getteriai ir setteriai
+
+// Class representing a user
+class User {
+    private String username;
+    private String password;
+    private Role role;
+
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    // Getters and setters
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+}
+
+// Class representing a book
+class Book {
+    private String title;
+    private String category;
+    private String isbn;
+    private String summary;
+    private int pageCount;
+
+    public Book(String title, String category, String isbn, String summary, int pageCount) {
+        this.title = title;
+        this.category = category;
+        this.isbn = isbn;
+        this.summary = summary;
+        this.pageCount = pageCount;
+    }
+
+    // Getters and setters
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+}
+
+// Class representing a category of books
+class Category {
+    private String name;
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    // Getters and setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
