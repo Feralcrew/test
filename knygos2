@@ -1,0 +1,152 @@
+// Main klasė, kuri vykdo programą.
+// User klasė, kuri aprašo vartotoją.
+// Book klasė, kuri aprašo knygą.
+// Category klasė, kuri aprašo knygų kategoriją.
+// Reservation klasė, kuri aprašo rezervaciją.
+// AuthenticationService klasė, kuri atsakinga už vartotojų autentifikavimą.
+// AdminController klasė, kuri valdo administracinės dalies operacijas.
+// ReaderController klasė, kuri valdo skaitytojo operacijas.
+
+import java.util.*;
+
+// Main class to run the program
+public class Main {
+    public static void main(String[] args) {
+        // Initializing controllers
+        AdminController adminController = new AdminController();
+        ReaderController readerController = new ReaderController();
+
+        // Simulating user interaction (authentication and usage)
+        User admin = new User("admin", "admin123", Role.ADMIN);
+        User reader = new User("reader", "reader123", Role.READER);
+
+        AuthenticationService authService = new AuthenticationService();
+
+        if (authService.authenticate(admin)) {
+            adminController.addBookCategory("Fantasy");
+            adminController.addBook(new Book("The Hobbit", "Fantasy", "123456789", "Fantasy novel", 300));
+            adminController.addBook(new Book("Harry Potter", "Fantasy", "987654321", "Fantasy novel", 400));
+            adminController.addBook(new Book("The Lord of the Rings", "Fantasy", "111222333", "Fantasy novel", 1000));
+            adminController.removeBook("The Lord of the Rings");
+        }
+
+        if (authService.authenticate(reader)) {
+            readerController.searchBook("Harry Potter");
+            readerController.reserveBook("Harry Potter");
+            readerController.addToFavorites("Harry Potter");
+        }
+    }
+}
+
+// Enum to represent user roles
+enum Role {
+    ADMIN,
+    READER
+}
+
+// Class representing a user
+class User {
+    private String username;
+    private String password;
+    private Role role;
+
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    // Getters and setters
+    // ...
+}
+
+// Class representing a book
+class Book {
+    private String title;
+    private String category;
+    private String isbn;
+    private String summary;
+    private int pageCount;
+
+    public Book(String title, String category, String isbn, String summary, int pageCount) {
+        this.title = title;
+        this.category = category;
+        this.isbn = isbn;
+        this.summary = summary;
+        this.pageCount = pageCount;
+    }
+
+    // Getters and setters
+    // ...
+}
+
+// Class representing a category of books
+class Category {
+    private String name;
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    // Getters and setters
+    // ...
+}
+
+// Class representing a reservation
+class Reservation {
+    private User user;
+    private Book book;
+
+    public Reservation(User user, Book book) {
+        this.user = user;
+        this.book = book;
+    }
+
+    // Getters and setters
+    // ...
+}
+
+// Class responsible for user authentication
+class AuthenticationService {
+    public boolean authenticate(User user) {
+        // Simulating authentication logic
+        return user != null && user.getUsername().equals("admin") && user.getPassword().equals("admin123");
+    }
+}
+
+// Controller responsible for administrative actions
+class AdminController {
+    public void addBookCategory(String name) {
+        // Logic to add book category
+        Category category = new Category(name);
+        // Add category to database or data structure
+    }
+
+    public void addBook(Book book) {
+        // Logic to add book
+        // Add book to database or data structure
+    }
+
+    public void removeBook(String title) {
+        // Logic to remove book
+        // Remove book from database or data structure
+    }
+}
+
+// Controller responsible for reader actions
+class ReaderController {
+    public void searchBook(String title) {
+        // Logic to search for a book
+        // Search book in database or data structure
+    }
+
+    public void reserveBook(String title) {
+        // Logic to reserve a book
+        // Reserve book in database or data structure
+    }
+
+    public void addToFavorites(String title) {
+        // Logic to add book to favorites
+        // Add book to favorites in database or data structure
+    }
+}
